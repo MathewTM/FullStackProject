@@ -55,3 +55,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #Project Specfic Gems
 gem 'activeadmin', github: 'activeadmin'
+gem 'devise', '~> 4.2'
