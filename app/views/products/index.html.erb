@@ -1,0 +1,9 @@
+<input type="text" name="product_search" placeholder="Search...">
+<button>Search Products</button>
+
+<%= @products.each do |product| %>
+  <p>
+    <%= product.name %> - $<%= product.price %></br>
+    <%= product.quantity %> in stock
+  </p>
+<% end %>
