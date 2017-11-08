@@ -1,5 +1,7 @@
-<input type="text" name="product_search" placeholder="Search...">
-<button>Search Products</button>
+<form action="/products/keyword">
+  <input type="text" name="keyword" placeholder="Search...">
+  <button>Search Products</button>
+</form>
 
 <%= @products.each do |product| %>
   <p>
