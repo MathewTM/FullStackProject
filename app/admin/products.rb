@@ -12,12 +12,20 @@ ActiveAdmin.register Product do
 #   permitted
 # end
 
+  permit_params :name,
+                :type,
+                :description,
+                :price,
+                :quantity
 
-permit_params :name,
-              :type,
-              :price,
-              :quantity,
-              :last_updated,
-              :updated_by
+  # form do |f|
+  #   f.inputs "Label" do
+  #     f.input :name,
+  #     f.input :type,
+  #     f.input :description,
+  #     f.input :price,
+  #     f.input :quantity
+  #   end
+  # end
 
 end
