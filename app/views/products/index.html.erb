@@ -1,4 +1,4 @@
-<form action="/products/keyword">
+<form action="/products/">
   <input type="text" name="keyword" placeholder="Search...">
   <button>Search Products</button>
 </form>
@@ -6,6 +6,7 @@
 <%= @products.each do |product| %>
   <p>
     <%= product.name %> - $<%= product.price %></br>
+    <%= product.description %></br>
     <%= product.quantity %> in stock
   </p>
 <% end %>
