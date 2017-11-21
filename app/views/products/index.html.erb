@@ -5,7 +5,7 @@
 
 <%= @products.each do |product| %>
   <p>
-    <%= product.name %> - $<%= product.price %></br>
+    <%= link_to product.name, product_view_path(product.id) %> - $<%= product.price %></br>
     <%= product.description %></br>
     <%= product.quantity %> in stock
   </p>

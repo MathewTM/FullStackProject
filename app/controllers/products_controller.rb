@@ -6,4 +6,8 @@ class ProductsController < ApplicationController
       @products = Product.all
     end
   end
+
+  def view
+    @product = Product.find_by(id: params[:id])
+  end
 end

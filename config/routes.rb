@@ -5,4 +5,5 @@ Rails.application.routes.draw do
 
   #get 'products/keyword' => 'products#index', as: 'products'
   get 'products' => 'products#index', as: 'all_products'
+  get 'products/:id' => 'products#view', as: 'product_view', id: /\d+/
 end
