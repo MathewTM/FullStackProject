@@ -12,6 +12,12 @@ class ProductsController < ApplicationController
   end
 
   def add_to_cart
-    redirect_to :controller => 'products', :action => 'index' 
+    if session[:cart_quantity] then
+      session[:cart_quantity] = session[:cart_quantity] + 1
+    else
+      session[:cart_quantity] = 1
+    end
+
+    redirect_to :controller => 'products', :action => 'index'
   end
 end
