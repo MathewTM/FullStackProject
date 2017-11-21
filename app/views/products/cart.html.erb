@@ -9,7 +9,7 @@
   </tr>
   <% @cart.each do |item| %>
     <tr>
-      <td><%= link_to item[:name], product_view_path(item[:id]) %></td>
+      <td><%= link_to item[:name], product_view_path(item[:id]) %> x <%= item[:occurances] %></td>
       <td>$<%= item[:price] %></td>
     </tr>
   <% end %>
