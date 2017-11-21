@@ -1,5 +1,11 @@
 class ProductsController < ApplicationController
+
   def index
+
+    if !session[:cart] then
+      session[:cart] = Array.new
+    end
+
     if params[:keyword] != nil then
       @products = Product.where("name LIKE :keyword OR description LIKE :keyword", {:keyword => "%" + params[:keyword] + "%"})
     else
@@ -12,11 +18,7 @@ class ProductsController < ApplicationController
   end
 
   def add_to_cart
-    if session[:cart_quantity] then
-      session[:cart_quantity] = session[:cart_quantity] + 1
-    else
-      session[:cart_quantity] = 1
-    end
+    session[:cart] << params[:id]
 
     redirect_to :controller => 'products', :action => 'index'
   end
