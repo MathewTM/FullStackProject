@@ -7,6 +7,6 @@
   <p>
     <%= link_to product.name, product_view_path(product.id) %> - $<%= product.price %></br>
     <%= product.description %></br>
-    <%= product.quantity %> in stock
+    <%= product.quantity %> in stock | <%= link_to 'Add to Cart', all_products_path(product.id) %>
   </p>
 <% end %>
