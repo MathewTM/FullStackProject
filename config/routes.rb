@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  #get 'products/keyword' => 'products#index', as: 'products'
   get 'products' => 'products#index', as: 'all_products'
   get 'products/:id' => 'products#view', as: 'product_view', id: /\d+/
+  get 'products/add/:id' => 'products#add_to_cart', as: 'add_to_cart', id: /\d+/
+  get 'products/cart' => 'products#cart', as: 'cart'
 end
