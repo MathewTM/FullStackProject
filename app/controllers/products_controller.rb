@@ -10,4 +10,8 @@ class ProductsController < ApplicationController
   def view
     @product = Product.find_by(id: params[:id])
   end
+
+  def add_to_cart
+    redirect_to :controller => 'products', :action => 'index' 
+  end
 end
