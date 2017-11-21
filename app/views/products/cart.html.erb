@@ -1,1 +1,16 @@
 <%= render 'layouts/menu' %>
+
+<h1>Your Cart</h1>
+
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Price</th>
+  </tr>
+  <% @cart.each do |item| %>
+    <tr>
+      <td><%= link_to item[:name], product_view_path(item[:id]) %></td>
+      <td>$<%= item[:price] %></td>
+    </tr>
+  <% end %>
+</table>

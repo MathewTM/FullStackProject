@@ -2,6 +2,6 @@
   <li><%= link_to 'Products', all_products_path %></li>
 
   <% if session[:cart] then %>
-    <li>Cart(<%= session[:cart].size %>)</li>
+    <li><%= link_to 'Cart ()', cart_path %></li>
   <% end %>
 </ul>

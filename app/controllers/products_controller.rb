@@ -22,4 +22,17 @@ class ProductsController < ApplicationController
 
     redirect_to :controller => 'products', :action => 'index'
   end
+
+  def cart
+    @cart = Array.new
+
+    session[:cart].each do |item|
+      search = Product.find_by(id: item)
+      product = Hash.new
+      product[:id] = search.id
+      product[:name] = search.name
+      product[:price] = search.price
+      @cart << product
+    end
+  end
 end

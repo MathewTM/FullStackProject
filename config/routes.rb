@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   get 'products' => 'products#index', as: 'all_products'
   get 'products/:id' => 'products#view', as: 'product_view', id: /\d+/
   get 'products/add/:id' => 'products#add_to_cart', as: 'add_to_cart', id: /\d+/
+  get 'products/cart' => 'products#cart', as: 'cart'
 end
