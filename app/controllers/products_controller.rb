@@ -29,6 +29,7 @@ class ProductsController < ApplicationController
 
   def cart
     @cart = Array.new
+    @total = 0
 
     session[:cart].each do |item|
 
@@ -39,6 +40,7 @@ class ProductsController < ApplicationController
       product[:price] = search.price
       product[:occurances] = item[1]["occurances"]
       @cart << product
+      @total += search.price
     end
   end
 end
