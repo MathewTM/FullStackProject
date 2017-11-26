@@ -30,6 +30,7 @@ class ProductsController < ApplicationController
   def cart
     @cart = Array.new
     @total = 0
+    session[:subtotal] = 0
 
     session[:cart].each do |item|
 
@@ -40,7 +41,14 @@ class ProductsController < ApplicationController
       product[:price] = search.price
       product[:occurances] = item[1]["occurances"]
       @cart << product
-      @total += search.price
+      session[:subtotal] += search.price * product[:occurances]
     end
+  end
+
+  def checkout
+  end
+
+  def payment
+
   end
 end

@@ -14,6 +14,8 @@
     </tr>
   <% end %>
   <tr>
-    <td></strong>Total: $<%= @total %></strong></td>
+    <td></strong>Total: $<%= session[:subtotal] %></strong></td>
   </tr>
 </table>
+
+<%= link_to 'Checkout', checkout_path %>
