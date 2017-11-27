@@ -54,5 +54,10 @@ class ProductsController < ApplicationController
     @address = params['address']
     @city = params['city']
     @province = params['province']
+
+    if @name == "" || @address == "" || @city == "" then
+      redirect_to :controller => 'products', :action => 'checkout'
+    else
+    end
   end
 end
