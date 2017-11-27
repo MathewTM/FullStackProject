@@ -44,7 +44,12 @@ class ProductsController < ApplicationController
     end
 
     session[:subtotal] = 0
+
+    province = Province.find_by(code: @province)
     @cart = fill_cart
+    @pst = session[:subtotal] * province.pst.to_f / 100
+    @gst = session[:subtotal] * 0.05
+    @total = session[:subtotal] + @pst + @gst
   end
 end
 

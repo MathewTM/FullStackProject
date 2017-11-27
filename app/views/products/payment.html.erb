@@ -19,9 +19,9 @@
   <tr>
     <td>
       <p>Subtotal: $<%= session[:subtotal] %></p>
-      <p>GST: $0.00</p>
-      <p>PST: $0.00</p>
-      <p><strong>Total: $0.00</strong></p>
+      <p>GST: $<%= @gst %></p>
+      <p>PST: $<%= @pst %></p>
+      <p><strong>Total: $<%= @total %></strong></p>
     </td>
   </tr>
 </table>
