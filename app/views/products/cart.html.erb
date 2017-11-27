@@ -5,12 +5,19 @@
 <table>
   <tr>
     <th>Item</th>
+    <th>Quantity</th>
     <th>Price</th>
   </tr>
   <% @cart.each do |item| %>
     <tr>
-      <td><%= link_to item[:name], product_view_path(item[:id]) %> x <input type="number" value=<%= item[:occurances] %> /></td>
+      <td><%= link_to item[:name], product_view_path(item[:id]) %></td>
+      <td><input type="number" value=<%= item[:occurances] %> /></td>
       <td>$<%= item[:price] * item[:occurances]%></td>
     </tr>
   <% end %>
+  <tr>
+    <td><strong>Total: $<%= session[:subtotal] %></strong></td>
+  </tr>
 </table>
+
+<%= link_to 'Checkout', checkout_path %>

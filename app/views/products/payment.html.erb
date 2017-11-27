@@ -1,0 +1,27 @@
+<h1>Finalize</h1>
+
+<p><%= @name %></p>
+<p><%= @address %>, <%= @city %> <%= @province %></p>
+
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Quantity</th>
+    <th>Price</th>
+  </tr>
+  <% @cart.each do |item| %>
+    <tr>
+      <td><%= link_to item[:name], product_view_path(item[:id]) %></td>
+      <td><%= item[:occurances] %></td>
+      <td>$<%= item[:price] * item[:occurances]%></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td>
+      <p>Subtotal: $<%= session[:subtotal] %></p>
+      <p>GST: $<%= @gst %></p>
+      <p>PST: $<%= @pst %></p>
+      <p><strong>Total: $<%= @total %></strong></p>
+    </td>
+  </tr>
+</table>

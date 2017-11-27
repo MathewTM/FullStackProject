@@ -1,0 +1,40 @@
+<%= render 'layouts/menu' %>
+
+<h1>Order Information</h1>
+
+<form action="/products/payment">
+  <table>
+    <tr>
+      <th>
+        <label for="name">Name:</label>
+        <input name="name"></br>
+      </th>
+    </tr>
+
+    <tr>
+      <th>
+        <label for="address">Address:</label>
+        <input name="address"></br>
+      </th>
+    </tr>
+
+    <tr>
+      <th>
+        <label for="city">City:</label>
+        <input name="city"></br>
+      </th>
+    </tr>
+
+    <tr>
+      <th>
+        <label for="province">Province:</label>
+        <select name="province">
+          <%= @provinces.each do |province| %>
+            <option value='<%= province.code %>'><%= province.name %></option>
+          <% end %>
+        </select>
+      </th>
+    </tr>
+  </table>
+  <button type="submit">Next</button>
+</form>
