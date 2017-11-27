@@ -2,33 +2,37 @@
 
 <h1>Order Information</h1>
 
-<form type="post" action="/products/payment">
+<form action="/products/payment">
   <table>
     <tr>
       <th>
         <label for="name">Name:</label>
-        <input></br>
+        <input name="name"></br>
       </th>
     </tr>
 
     <tr>
       <th>
         <label for="address">Address:</label>
-        <input></br>
+        <input name="address"></br>
       </th>
     </tr>
 
     <tr>
       <th>
         <label for="city">City:</label>
-        <input></br>
+        <input name="city"></br>
       </th>
     </tr>
 
     <tr>
       <th>
         <label for="province">Province:</label>
-        <input></br>
+        <select name="province">
+          <%= @provinces.each do |province| %>
+            <option value='<%= province.code %>'><%= province.name %></option>
+          <% end %>
+        </select>
       </th>
     </tr>
   </table>

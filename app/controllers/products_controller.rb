@@ -30,7 +30,7 @@ class ProductsController < ApplicationController
   def cart
     @cart = Array.new
     @total = 0
-    session[:subtotal] = 0
+    session[:total] = 0
 
     session[:cart].each do |item|
 
@@ -41,14 +41,18 @@ class ProductsController < ApplicationController
       product[:price] = search.price
       product[:occurances] = item[1]["occurances"]
       @cart << product
-      session[:subtotal] += search.price * product[:occurances]
+      session[:total] += search.price * product[:occurances]
     end
   end
 
   def checkout
+    @provinces = Province.order(:code)
   end
 
   def payment
-
+    @name = params['name']
+    @address = params['address']
+    @city = params['city']
+    @province = params['province']
   end
 end
