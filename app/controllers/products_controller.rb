@@ -1,10 +1,6 @@
 class ProductsController < ApplicationController
-
   def index
-
-    if !session[:cart] then
-      session[:cart] = Hash.new
-    end
+    if !session[:cart] then session[:cart] = Hash.new
 
     if params[:keyword] != nil then
       @products = Product.where("name LIKE :keyword OR description LIKE :keyword", {:keyword => "%" + params[:keyword] + "%"})
@@ -57,7 +53,20 @@ class ProductsController < ApplicationController
 
     if @name == "" || @address == "" || @city == "" then
       redirect_to :controller => 'products', :action => 'checkout'
-    else
+    end
+
+    @cart = Array.new
+    @total = 0
+
+    session[:cart].each do |item|
+
+      search = Product.find_by(id: item)
+      product = Hash.new
+      product[:id] = search.id
+      product[:name] = search.name
+      product[:price] = search.price
+      product[:occurances] = item[1]["occurances"]
+      @cart << product
     end
   end
 end
