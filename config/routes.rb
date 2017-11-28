@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   post 'products/payment' => 'products#payment', as: 'payment'
 
   get 'customers/register' => 'customers#register', as: 'register'
+  post 'customers/create' => 'customers#create', as: 'create_customer'
   get 'customers/login' => 'customers#login', as: 'login'
 end
