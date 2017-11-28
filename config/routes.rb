@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get 'products/add/:id' => 'products#add_to_cart', as: 'add_to_cart', id: /\d+/
   get 'products/cart' => 'products#cart', as: 'cart'
   get 'products/checkout' => 'products#checkout', as: 'checkout'
-  get 'products/payment' => 'products#payment', as: 'payment'
+  post 'products/payment' => 'products#payment', as: 'payment'
 
   get 'customers/register' => 'customers#register', as: 'register'
   get 'customers/login' => 'customers#login', as: 'login'

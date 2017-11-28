@@ -38,8 +38,9 @@ class ProductsController < ApplicationController
     @address = params['address']
     @city = params['city']
     @province = params['province']
+    @postal_code = params['postal_code']
 
-    if @name == '' || @address == '' || @city == ''
+    if @name == '' || @email == '' || @address == '' || @city == '' || @postal_code == ''
       redirect_to :controller => 'products', :action => 'checkout'
     end
 
@@ -51,20 +52,21 @@ class ProductsController < ApplicationController
     @gst = session[:subtotal] * 0.05
     @total = session[:subtotal] + @pst + @gst
   end
-end
 
-def fill_cart
-  cart = []
+  private
+  def fill_cart
+    cart = []
 
-  session[:cart].each do |item|
-    search = Product.find_by(id: item)
-    product = {}
-    product[:id] = search.id
-    product[:name] = search.name
-    product[:price] = search.price
-    product[:occurances] = item[1]['occurances']
-    cart << product
-    session[:subtotal] += search.price * product[:occurances]
+    session[:cart].each do |item|
+      search = Product.find_by(id: item)
+      product = {}
+      product[:id] = search.id
+      product[:name] = search.name
+      product[:price] = search.price
+      product[:occurances] = item[1]['occurances']
+      cart << product
+      session[:subtotal] += search.price * product[:occurances]
+    end
+    cart
   end
-  cart
 end
