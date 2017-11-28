@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   get 'customers/register' => 'customers#register', as: 'register'
   post 'customers/create' => 'customers#create', as: 'create_customer'
   get 'customers/login' => 'customers#login', as: 'login'
+  get 'customers/logout' => 'customers#logout', as: 'logout'
 end

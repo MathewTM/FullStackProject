@@ -17,7 +17,13 @@ class CustomersController < ApplicationController
                       province_id:  params['province'],
                       postal_code:  params['postal_code'])
 
+      session[:user] = { id: params['email'], name: params['name'] }
       redirect_to :controller => 'products', :action => 'index'
     end
+  end
+
+  def logout
+    session.delete(:user)
+    redirect_to :controller => 'products', :action => 'index'
   end
 end

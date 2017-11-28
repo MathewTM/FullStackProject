@@ -1,7 +1,5 @@
 class ProductsController < ApplicationController
   def index
-    unless session[:cart] then session[:cart] = {} end
-
     if !params[:keyword].nil?
       kw = '%' + params[:keyword] + '%'
       @products = Product.where('name LIKE :kw OR description LIKE :kw', :kw => kw)
@@ -15,6 +13,8 @@ class ProductsController < ApplicationController
   end
 
   def add_to_cart
+    unless session[:cart] then session[:cart] = {} end
+
     if !session[:cart].include? params[:id]
       session[:cart] = session[:cart].merge!(params[:id] => { 'occurances' => 1 })
     else
