@@ -1,40 +1,30 @@
 <%= render 'layouts/menu' %>
 
-<h1>Order Information</h1>
+<h1>Finalize</h1>
 
-<form action="/products/payment">
-  <table>
-    <tr>
-      <th>
-        <label for="name">Name:</label>
-        <input name="name"></br>
-      </th>
-    </tr>
+<p><%= @name %></p>
+<p><%= @address %>, <%= @city %> <%= @province %></p>
+<p><%= @postal_code %>
 
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Quantity</th>
+    <th>Price</th>
+  </tr>
+  <% @cart.each do |item| %>
     <tr>
-      <th>
-        <label for="address">Address:</label>
-        <input name="address"></br>
-      </th>
+      <td><%= link_to item[:name], product_view_path(item[:id]) %></td>
+      <td><%= item[:occurances] %></td>
+      <td>$<%= item[:price] * item[:occurances]%></td>
     </tr>
-
-    <tr>
-      <th>
-        <label for="city">City:</label>
-        <input name="city"></br>
-      </th>
-    </tr>
-
-    <tr>
-      <th>
-        <label for="province">Province:</label>
-        <select name="province">
-          <%= @provinces.each do |province| %>
-            <option value='<%= province.code %>'><%= province.name %></option>
-          <% end %>
-        </select>
-      </th>
-    </tr>
-  </table>
-  <button type="submit">Next</button>
-</form>
+  <% end %>
+  <tr>
+    <td>
+      <p>Subtotal: $<%= session[:subtotal] %></p>
+      <p>GST: $<%= @gst %></p>
+      <p>PST: $<%= @pst %></p>
+      <p><strong>Total: $<%= @total %></strong></p>
+    </td>
+  </tr>
+</table>

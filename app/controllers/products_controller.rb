@@ -1,7 +1,5 @@
 class ProductsController < ApplicationController
   def index
-    unless session[:cart] then session[:cart] = {} end
-
     if !params[:keyword].nil?
       kw = '%' + params[:keyword] + '%'
       @products = Product.where('name LIKE :kw OR description LIKE :kw', :kw => kw)
@@ -15,6 +13,8 @@ class ProductsController < ApplicationController
   end
 
   def add_to_cart
+    unless session[:cart] then session[:cart] = {} end
+
     if !session[:cart].include? params[:id]
       session[:cart] = session[:cart].merge!(params[:id] => { 'occurances' => 1 })
     else
@@ -30,41 +30,34 @@ class ProductsController < ApplicationController
   end
 
   def checkout
-    @provinces = Province.order(:code)
-  end
+    if session[:user].nil?
+      session[:redirect] = { controller: 'products', action: 'checkout'}
+      redirect_to :controller => 'customers', :action => 'login'
+    else
+      customer = Customer.find_by(id: session[:user]['id'])
+      session[:subtotal] = 0
 
-  def payment
-    @name = params['name']
-    @address = params['address']
-    @city = params['city']
-    @province = params['province']
-
-    if @name == '' || @address == '' || @city == ''
-      redirect_to :controller => 'products', :action => 'checkout'
+      @cart = fill_cart
+      @pst = session[:subtotal] * customer.province.pst.to_f / 100
+      @gst = session[:subtotal] * 0.05
+      @total = session[:subtotal] + @pst + @gst
     end
-
-    session[:subtotal] = 0
-
-    province = Province.find_by(code: @province)
-    @cart = fill_cart
-    @pst = session[:subtotal] * province.pst.to_f / 100
-    @gst = session[:subtotal] * 0.05
-    @total = session[:subtotal] + @pst + @gst
   end
-end
 
-def fill_cart
-  cart = []
+  private
+  def fill_cart
+    cart = []
 
-  session[:cart].each do |item|
-    search = Product.find_by(id: item)
-    product = {}
-    product[:id] = search.id
-    product[:name] = search.name
-    product[:price] = search.price
-    product[:occurances] = item[1]['occurances']
-    cart << product
-    session[:subtotal] += search.price * product[:occurances]
+    session[:cart].each do |item|
+      search = Product.find_by(id: item)
+      product = {}
+      product[:id] = search.id
+      product[:name] = search.name
+      product[:price] = search.price
+      product[:occurances] = item[1]['occurances']
+      cart << product
+      session[:subtotal] += search.price * product[:occurances]
+    end
+    cart
   end
-  cart
 end
