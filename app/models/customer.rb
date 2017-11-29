@@ -1,3 +1,3 @@
 class Customer < ApplicationRecord
-  has_one :province
+  belongs_to :province
 end

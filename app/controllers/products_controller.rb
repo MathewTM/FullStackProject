@@ -30,27 +30,18 @@ class ProductsController < ApplicationController
   end
 
   def checkout
-    @provinces = Province.order(:code)
-  end
+    if session[:user].nil?
+      session[:redirect] = { controller: 'products', action: 'checkout'}
+      redirect_to :controller => 'customers', :action => 'login'
+    else
+      customer = Customer.find_by(id: session[:user]['id'])
+      session[:subtotal] = 0
 
-  def payment
-    @name = params['name']
-    @address = params['address']
-    @city = params['city']
-    @province = params['province']
-    @postal_code = params['postal_code']
-
-    if @name == '' || @email == '' || @address == '' || @city == '' || @postal_code == ''
-      redirect_to :controller => 'products', :action => 'checkout'
+      @cart = fill_cart
+      @pst = session[:subtotal] * customer.province.pst.to_f / 100
+      @gst = session[:subtotal] * 0.05
+      @total = session[:subtotal] + @pst + @gst
     end
-
-    session[:subtotal] = 0
-
-    province = Province.find_by(code: @province)
-    @cart = fill_cart
-    @pst = session[:subtotal] * province.pst.to_f / 100
-    @gst = session[:subtotal] * 0.05
-    @total = session[:subtotal] + @pst + @gst
   end
 
   private

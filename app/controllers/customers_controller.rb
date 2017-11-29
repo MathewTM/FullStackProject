@@ -41,7 +41,12 @@ class CustomersController < ApplicationController
         redirect_to :controller => 'customers', :action => 'login'
       else
         session[:user] = { id: customer.id, name: customer.name }
-        redirect_to :controller => 'products', :action => 'index'
+        if session[:redirect]
+          redirect_to :controller => session[:redirect]['controller'], :action => session[:redirect]['action']
+          session.delete(:redirect)
+        else
+          redirect_to :controller => 'products', :action => 'index'
+        end
       end
     end
   end
