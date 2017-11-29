@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'charges/new'
+
+  get 'charges/create'
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -15,4 +19,6 @@ Rails.application.routes.draw do
   get 'customers/login' => 'customers#login', as: 'login'
   get 'customers/logout' => 'customers#logout', as: 'logout'
   post 'customers/confirm' => 'customers#confirm', as: 'confirm_login'
+
+  resources :charges, only: [:new, :create]
 end
