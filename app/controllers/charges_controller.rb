@@ -5,7 +5,6 @@ class ChargesController < ApplicationController
       redirect_to :controller => 'customers', :action => 'login'
     else
       customer = Customer.find_by(id: session[:user]['id'])
-      @subtotal = 0
 
       @cart = fill_cart
       @pst = @subtotal * (customer.province.pst.to_f / 100)
@@ -16,8 +15,6 @@ class ChargesController < ApplicationController
   end
 
   def create
-    session.delete(:cart)
-
     stripeCustomer = Stripe::Customer.create(
       :email => params[:stripeEmail],
       :source  => params[:stripeToken]
@@ -31,11 +28,19 @@ class ChargesController < ApplicationController
     )
 
     customer = Customer.find_by(id: session[:user]['id'])
-    Order.create(customer_id:   customer.id,
-                 amount:        charge.amount / 100,
-                 paid:          true,
-                 stripe_email:  params[:stripeEmail],
-                 stripe_token:  params[:stripeToken])
+    order = Order.create(customer_id:   customer.id,
+                         amount:        charge.amount / 100,
+                         paid:          true,
+                         stripe_email:  params[:stripeEmail],
+                         stripe_token:  params[:stripeToken])
+
+    cart = fill_cart
+    cart.each do |product|
+      LineItem.create(order_id:   order.id,
+                      product_id: product[:id],
+                      quantity:   product[:occurances])
+    end
+    session.delete(:cart)
 
   rescue Stripe::CardError => e
     flash[:error] = e.message
@@ -46,14 +51,11 @@ end
 private
 def fill_cart
   cart = []
+  @subtotal = 0
 
   session[:cart].each do |item|
     search = Product.find_by(id: item)
-    product = {}
-    product[:id] = search.id
-    product[:name] = search.name
-    product[:price] = search.price
-    product[:occurances] = item[1]['occurances']
+    product = { id: search.id, name: search.name, price: search.price, occurances: item[1]['occurances'] }
     cart << product
     @subtotal += search.price * 100 * product[:occurances]
   end

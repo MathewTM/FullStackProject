@@ -1,0 +1,25 @@
+<%= render 'layouts/menu' %>
+
+<h1>Order #<%= @order.id %></h1>
+
+<p><%= @order.customer.name %></p>
+<p><%= @order.customer.address %>, <%= @order.customer.city %> <%= @order.customer.province.code %></p>
+<p><%= @order.customer.postal_code %>
+
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Quantity</th>
+    <th>Price</th>
+  </tr>
+  <% @line_items.each do |item| %>
+    <tr>
+      <td><%= item.product.name %></td>
+      <td><%= item.quantity %></td>
+      <td><%= number_to_currency(item.product.price * 100  * item.quantity / 100) %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td><strong>Total: <%= number_to_currency(@order.amount) %></strong></td>
+  </tr>
+</table>

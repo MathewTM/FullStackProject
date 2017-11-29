@@ -1,0 +1,9 @@
+<%= render 'layouts/menu' %>
+
+<h1>Your Orders</h1>
+
+<ul>
+  <%= @orders.each do |order| %>
+    <li><%= link_to order.created_at, view_order_path(order.id) %></li>
+  <% end %>
+</ul>
