@@ -1,3 +1,33 @@
+<%= render 'layouts/menu' %>
+
+<h1>Finalize</h1>
+
+<p><%= @name %></p>
+<p><%= @address %>, <%= @city %> <%= @province %></p>
+<p><%= @postal_code %>
+
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Quantity</th>
+    <th>Price</th>
+  </tr>
+  <% @cart.each do |item| %>
+    <tr>
+      <td><%= link_to item[:name], product_view_path(item[:id]) %></td>
+      <td><%= item[:occurances] %></td>
+      <td>$<%= item[:price] * item[:occurances]%></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td>
+      <p>Subtotal: <%= number_to_currency(session[:subtotal] / 100) %></p>
+      <p>GST: <%= number_to_currency(@gst / 100) %></p>
+      <p>PST: <%= number_to_currency(@pst / 100) %></p>
+    </td>
+  </tr>
+</table>
+
 <%= form_tag charges_path do %>
   <article>
     <% if flash[:error].present? %>
@@ -6,13 +36,13 @@
       </div>
     <% end %>
     <label class="amount">
-      <span>Amount: <%= number_to_currency(@amount / 100) %></span>
+      <span><strong>Total: <%= number_to_currency(@total / 100) %></strong></span>
     </label>
   </article>
 
   <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
           data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
           data-description="<%= @description %>"
-          data-amount="<%= @amount %>"
+          data-amount="<%= @total %>"
           data-locale="auto"></script>
 <% end %>
