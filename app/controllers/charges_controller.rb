@@ -5,20 +5,18 @@ class ChargesController < ApplicationController
       redirect_to :controller => 'customers', :action => 'login'
     else
       customer = Customer.find_by(id: session[:user]['id'])
-      session[:subtotal] = 0
+      @subtotal = 0
 
       @cart = fill_cart
-      @pst = session[:subtotal] * (customer.province.pst.to_f / 100)
-      @gst = session[:subtotal] * 0.05
-      @total = session[:subtotal] + @pst + @gst
+      @pst = @subtotal * (customer.province.pst.to_f / 100)
+      @gst = @subtotal * 0.05
+      session[:total] = @subtotal + @pst + @gst
       @description = 'Give me Money!'
     end
   end
 
   def create
     session.delete(:cart)
-
-    amount = 500
 
     stripeCustomer = Stripe::Customer.create(
       :email => params[:stripeEmail],
@@ -27,14 +25,14 @@ class ChargesController < ApplicationController
 
     charge = Stripe::Charge.create(
       :customer    => stripeCustomer.id,
-      :amount      => amount,
+      :amount      => session[:total].to_i,
       :description => 'Rails Stripe customer',
       :currency    => 'cad'
     )
 
     customer = Customer.find_by(id: session[:user]['id'])
     Order.create(customer_id:   customer.id,
-                 amount:        charge.amount,
+                 amount:        charge.amount / 100,
                  paid:          true,
                  stripe_email:  params[:stripeEmail],
                  stripe_token:  params[:stripeToken])
@@ -57,7 +55,7 @@ def fill_cart
     product[:price] = search.price
     product[:occurances] = item[1]['occurances']
     cart << product
-    session[:subtotal] += search.price * 100 * product[:occurances]
+    @subtotal += search.price * 100 * product[:occurances]
   end
   cart
 end

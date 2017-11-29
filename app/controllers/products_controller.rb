@@ -25,28 +25,8 @@ class ProductsController < ApplicationController
   end
 
   def cart
-    session[:subtotal] = 0
-    @cart = fill_cart
-  end
-
-  def checkout
-    if session[:user].nil?
-      session[:redirect] = { controller: 'products', action: 'checkout'}
-      redirect_to :controller => 'customers', :action => 'login'
-    else
-      customer = Customer.find_by(id: session[:user]['id'])
-      session[:subtotal] = 0
-
-      @cart = fill_cart
-      @pst = session[:subtotal] * customer.province.pst.to_f / 100
-      @gst = session[:subtotal] * 0.05
-      @total = session[:subtotal] + @pst + @gst
-    end
-  end
-
-  private
-  def fill_cart
-    cart = []
+    @subtotal = 0
+    @cart = []
 
     session[:cart].each do |item|
       search = Product.find_by(id: item)
@@ -55,9 +35,8 @@ class ProductsController < ApplicationController
       product[:name] = search.name
       product[:price] = search.price
       product[:occurances] = item[1]['occurances']
-      cart << product
-      session[:subtotal] += search.price * product[:occurances]
+      @cart << product
+      @subtotal += search.price * 100 * product[:occurances]
     end
-    cart
   end
 end

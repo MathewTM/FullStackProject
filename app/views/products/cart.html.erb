@@ -12,11 +12,11 @@
     <tr>
       <td><%= link_to item[:name], product_view_path(item[:id]) %></td>
       <td><input type="number" value=<%= item[:occurances] %> /></td>
-      <td>$<%= item[:price] * item[:occurances]%></td>
+      <td><%= number_to_currency(item[:price] * 100  * item[:occurances] / 100) %></td>
     </tr>
   <% end %>
   <tr>
-    <td><strong>Total: $<%= session[:subtotal] %></strong></td>
+    <td><strong>Total: <%= number_to_currency(@subtotal / 100) %></strong></td>
   </tr>
 </table>
 

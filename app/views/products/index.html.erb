@@ -7,7 +7,7 @@
 
 <%= @products.each do |product| %>
   <p>
-    <%= link_to product.name, product_view_path(product.id) %> - $<%= product.price %></br>
+    <%= link_to product.name, product_view_path(product.id) %> - <%= number_to_currency(product.price) %></br>
     <%= product.quantity %> in stock | <%= link_to 'Add to Cart', add_to_cart_path(product.id) %>
   </p>
 <% end %>
