@@ -4,6 +4,7 @@ class OrdersController < ApplicationController
   end
 
   def view
-    @line_items = LineItem.where(order_id: params[:order_id])
+    @order = Order.find_by(id: params[:id])
+    @line_items = LineItem.where(order_id: params[:id])
   end
 end

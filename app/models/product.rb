@@ -1,3 +1,3 @@
 class Product < ApplicationRecord
-  belongs_to :line_item
+  has_one :line_item
 end

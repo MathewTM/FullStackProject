@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   post 'customers/confirm' => 'customers#confirm', as: 'confirm_login'
 
   get 'orders/index' => 'orders#index', as: 'orders_index'
-  get 'orders/view' => 'orders#view', as: 'view_order', id: /\d+/
+  get 'orders/view/:id' => 'orders#view', as: 'view_order', id: /\d+/
 
 
 
