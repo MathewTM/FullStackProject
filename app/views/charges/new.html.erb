@@ -16,12 +16,12 @@
     <tr>
       <td><%= link_to item[:name], product_view_path(item[:id]) %></td>
       <td><%= item[:occurances] %></td>
-      <td>$<%= item[:price] * item[:occurances]%></td>
+      <td><%= number_to_currency(item[:price] * 100 * item[:occurances] / 100)%></td>
     </tr>
   <% end %>
   <tr>
     <td>
-      <p>Subtotal: <%= number_to_currency(session[:subtotal] / 100) %></p>
+      <p>Subtotal: <%= number_to_currency(@subtotal / 100) %></p>
       <p>GST: <%= number_to_currency(@gst / 100) %></p>
       <p>PST: <%= number_to_currency(@pst / 100) %></p>
     </td>
@@ -36,13 +36,13 @@
       </div>
     <% end %>
     <label class="amount">
-      <span><strong>Total: <%= number_to_currency(@total / 100) %></strong></span>
+      <span><strong>Total: <%= number_to_currency(session[:total] / 100) %></strong></span>
     </label>
   </article>
 
   <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
           data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
           data-description="<%= @description %>"
-          data-amount="<%= @total %>"
+          data-amount="<%= session[:total] %>"
           data-locale="auto"></script>
 <% end %>
