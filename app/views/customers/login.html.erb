@@ -1,0 +1,14 @@
+<%= render 'layouts/menu' %>
+
+<h1>Login</h1>
+
+<%= form_tag confirm_login_path do %>
+  <%= render 'customer_form' %>
+  </table>
+
+  <% if flash[:notice] then %>
+    <p><%= flash[:notice] %></p>
+  <% end %>
+
+  <button type="submit">Login</button>
+<% end %>
