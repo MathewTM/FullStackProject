@@ -20,5 +20,10 @@ Rails.application.routes.draw do
   get 'customers/logout' => 'customers#logout', as: 'logout'
   post 'customers/confirm' => 'customers#confirm', as: 'confirm_login'
 
+  get 'orders/index' => 'orders#index', as: 'orders_index'
+  get 'orders/view' => 'orders#view', as: 'view_order', id: /\d+/
+
+
+
   resources :charges, only: [:new, :create]
 end
