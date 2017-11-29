@@ -30,11 +30,7 @@ class ProductsController < ApplicationController
 
     session[:cart].each do |item|
       search = Product.find_by(id: item)
-      product = {}
-      product[:id] = search.id
-      product[:name] = search.name
-      product[:price] = search.price
-      product[:occurances] = item[1]['occurances']
+      product = { id: search.id, name: search.name, price: search.price, occurances: item[1]['occurances'] }
       @cart << product
       @subtotal += search.price * 100 * product[:occurances]
     end
