@@ -16,16 +16,7 @@ ActiveAdmin.register Product do
                 :type,
                 :description,
                 :price,
-                :quantity
-
-  # form do |f|
-  #   f.inputs "Label" do
-  #     f.input :name,
-  #     f.input :type,
-  #     f.input :description,
-  #     f.input :price,
-  #     f.input :quantity
-  #   end
-  # end
+                :quantity,
+                :catagory_id
 
 end
