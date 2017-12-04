@@ -2,6 +2,14 @@
 
 <form action="/products/">
   <input type="text" name="keyword" placeholder="Search...">
+
+  <select name="search_by">
+    <option value="">All Catagories</option>
+    <% @catagories.each do |catagory| %>
+      <option value="<%= catagory.id %>"><%= catagory.name %></option>
+    <% end %>
+  </select>
+
   <button>Search Products</button>
 </form>
 

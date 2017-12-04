@@ -1,8 +1,19 @@
 class ProductsController < ApplicationController
   def index
-    if !params[:keyword].nil?
-      kw = '%' + params[:keyword] + '%'
-      @products = Product.where('name LIKE :kw OR description LIKE :kw', :kw => kw)
+    @catagories = Catagory.all
+
+    keyword = params[:keyword]
+    search_by = params[:search_by]
+
+    if keyword == '' then keyword = nil end
+    if search_by == '' then search_by = nil end
+
+    if !keyword.nil? and !search_by.nil? then
+      @products = Product.where("(name LIKE :keyword OR description LIKE :keyword) AND catagory_id=:search_by", :keyword => '%' + keyword + '%', :search_by => search_by)
+    elsif !keyword.nil? && search_by.nil? then
+      @products = Product.where('name LIKE :keyword OR description LIKE :keyword', :keyword => '%' + keyword + '%')
+    elsif keyword.nil? && !search_by.nil? then
+      @products = Product.where('catagory_id=:search_by', :search_by => search_by)
     else
       @products = Product.all
     end
