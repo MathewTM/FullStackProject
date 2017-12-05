@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   get 'products/cart' => 'products#cart', as: 'cart'
   get 'products/checkout' => 'products#checkout', as: 'checkout'
   post 'products/payment' => 'products#payment', as: 'payment'
+  get 'products/add_one/:id' => 'products#add_one', as: 'add_one', id: /\d+/
+  get 'products/remove_one/:id' => 'products#remove_one', as: 'remove_one', id: /\d+/
+  get 'products/remove_all/:id' => 'products#remove_all', as: 'remove_all', id: /\d+/ 
 
   get 'customers/register' => 'customers#register', as: 'register'
   post 'customers/create' => 'customers#create', as: 'create_customer'

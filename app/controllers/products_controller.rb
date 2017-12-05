@@ -46,4 +46,20 @@ class ProductsController < ApplicationController
       @subtotal += search.price * 100 * product[:occurances]
     end
   end
+
+  def add_one
+    session[:cart][params[:id]]['occurances'] += 1
+    redirect_to :controller => 'products', :action => 'cart'
+  end
+
+  def remove_one
+    session[:cart][params[:id]]['occurances'] -= 1
+    if session[:cart][params[:id]]['occurances'] == 0 then session[:cart].delete(params[:id]) end
+    redirect_to :controller => 'products', :action => 'cart'
+  end
+
+  def remove_all
+    session[:cart].delete(params[:id])
+    redirect_to :controller => 'products', :action => 'cart'
+  end
 end
