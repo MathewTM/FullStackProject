@@ -11,7 +11,10 @@
   <% @cart.each do |item| %>
     <tr>
       <td><%= link_to item[:name], product_view_path(item[:id]) %></td>
-      <td><input type="number" value=<%= item[:occurances] %> /></td>
+      <td>
+        <%= item[:occurances] %>
+        <%= link_to '+', add_one_path(item[:id]) %> | <%= link_to '-', remove_one_path(item[:id]) %> | <%= link_to 'Delete', remove_all_path(item[:id]) %>
+      </td>
       <td><%= number_to_currency(item[:price] * 100  * item[:occurances] / 100) %></td>
     </tr>
   <% end %>
